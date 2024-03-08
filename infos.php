@@ -71,7 +71,7 @@
                         <span class="input-group-text">last name</span>
                         <input type="text" class="form-control" placeholder="..." aria-label="last name" name="last_name">
                       </div>
-                      <select class="form-select" aria-label="Default select example">
+                      <select class="form-select" aria-label="Default select example" name="s1">
                         <option selected>Open this select menu</option>
                         <?php
                           $dbconfig['host'] = 'localhost';
@@ -98,7 +98,7 @@
                           }
                         ?>
                       </select>
-                      <select class="form-select" aria-label="Default select example">
+                      <select class="form-select" aria-label="Default select example" name="s2">
                         <option selected>Open this select menu</option>
                         <?php
                           $dbconfig['host'] = 'localhost';

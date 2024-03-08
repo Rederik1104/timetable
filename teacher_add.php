@@ -1,10 +1,11 @@
 <?php
 $first_name = htmlentities($_POST["first_name"]);
 $last_name = htmlentities($_POST["last_name"]);
-$subject1 = htmlentities($_POST["subject_1"]);
-$subject2 = htmlentities($_POST["subject_2"]);
+$subject1 = htmlentities($_POST["s1"]);
+$subject2 = htmlentities($_POST["s2"]);
 session_start();
 $userID = $_SESSION["userID"];
+
 
 echo $first_name, $last_name, $subject1, $subject2, $userID;
 
@@ -23,6 +24,9 @@ catch(PDOException $e) {
     exit('Unable to connect Database.');
 }
 
-//$stmt = $pdo->query("INSERT INTO teacher (name, vorname, subject)");
+$stmt = "INSERT INTO teacher (name, vorname, subjectID1, subjectID2, createdBY) VALUES ($last_name, $first_name, $subject1, $subject2, $userID)";
+if($stmt == TRUE){
+    //header("location: infos.php");
+}
 
 ?>
