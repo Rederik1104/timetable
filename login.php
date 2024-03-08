@@ -29,8 +29,9 @@ if (isset($_POST["submit"])){
                 $userID = $ID;
             }
         }
-
-        header("Location: infos.php?id=$userID");
+        session_start();
+        $_SESSION["userID"] = $userID;
+        header("Location: infos.php");
     }
 }
 
