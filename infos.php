@@ -71,12 +71,60 @@
                         <span class="input-group-text">last name</span>
                         <input type="text" class="form-control" placeholder="..." aria-label="last name" name="last_name">
                       </div>
-                      <div class="input-group mb-3">
-                        <span class="input-group-text">subject 1</span>
-                        <input type="text" class="form-control" placeholder="..." aria-label="subject1" name="subject_1">
-                        <span class="input-group-text">subject 2</span>
-                        <input type="text" class="form-control" placeholder="..." aria-label="subject2" name="subject_2">
-                      </div>
+                      <select class="form-select" aria-label="Default select example">
+                        <option selected>Open this select menu</option>
+                        <?php
+                          $dbconfig['host'] = 'localhost';
+                          $dbconfig['user'] = 'root';
+                          $dbconfig['base'] = 'login';
+                          $dbconfig['pass'] = '';
+                          $dbconfig['char'] = 'utf8';
+                          
+                          try {
+                              $pdo = new
+                              PDO('mysql:host='.$dbconfig['host'].';dbname='.$dbconfig['base'].';charset='.$dbconfig['char'].';',
+                              $dbconfig['user'], $dbconfig['pass']);
+                          }
+                          catch(PDOException $e) {
+                              exit('Unable to connect Database.');
+                          }
+                          $stmt = $pdo->query("SELECT subject_name FROM subject");
+                          $zaehler = 1;
+                          while($row = $stmt->fetch()){
+                            ?>
+                            <option value = <?php echo $zaehler?>><?php echo $row["subject_name"]?></option>
+                            <?php
+                            $zaehler += 1;
+                          }
+                        ?>
+                      </select>
+                      <select class="form-select" aria-label="Default select example">
+                        <option selected>Open this select menu</option>
+                        <?php
+                          $dbconfig['host'] = 'localhost';
+                          $dbconfig['user'] = 'root';
+                          $dbconfig['base'] = 'login';
+                          $dbconfig['pass'] = '';
+                          $dbconfig['char'] = 'utf8';
+                          
+                          try {
+                              $pdo = new
+                              PDO('mysql:host='.$dbconfig['host'].';dbname='.$dbconfig['base'].';charset='.$dbconfig['char'].';',
+                              $dbconfig['user'], $dbconfig['pass']);
+                          }
+                          catch(PDOException $e) {
+                              exit('Unable to connect Database.');
+                          }
+                          $stmt = $pdo->query("SELECT subject_name FROM subject");
+                          $zaehler = 1;
+                          while($row = $stmt->fetch()){
+                            ?>
+                            <option value = <?php echo $zaehler?>><?php echo $row["subject_name"]?></option>
+                            <?php
+                            $zaehler += 1;
+                          }
+                        ?>
+                      </select>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
