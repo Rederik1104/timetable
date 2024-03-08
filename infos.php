@@ -64,7 +64,7 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="teacher_add.php">
+                    <form action="teacher_add.php?id= <?php echo $_GET["id"]?>">
                       <div class="input-group mb-3">
                         <span class="input-group-text">first name</span>
                         <input type="text" class="form-control" placeholder="..." aria-label="first name" name="first_name">
