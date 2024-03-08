@@ -1,0 +1,8 @@
+.card{
+    margin-top: 80px;
+    margin-left: 20px;
+}
+.card_add{
+    display: flex;
+    flex-direction: row;
+}
