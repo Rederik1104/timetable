@@ -65,22 +65,25 @@
                 </div>
                 <div class="modal-body">
                     <form action="teacher_add.php">
-                    <div class="input-group mb-3">
-                      <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">information</button>
-                      <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="teacher_add.php">first name</a></li>
-                        <li><a class="dropdown-item" href="#">second name</a></li>
-                        <li><a class="dropdown-item" href="#">subject 1</a></li>
-                        <li><a class="dropdown-item" href="#">subject 2</a></li>
-                      </ul>
-                      <input type="text" class="form-control" aria-label="Text input with dropdown button">
-                    </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text">first name</span>
+                        <input type="text" class="form-control" placeholder="..." aria-label="first name" name="first_name">
+                        <span class="input-group-text">last name</span>
+                        <input type="text" class="form-control" placeholder="..." aria-label="last name" name="last_name">
+                      </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text">subject 1</span>
+                        <input type="text" class="form-control" placeholder="..." aria-label="subject1" name="subject_1">
+                        <span class="input-group-text">subject 2</span>
+                        <input type="text" class="form-control" placeholder="..." aria-label="subject2" name="subject_2">
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                      </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+                
               </div>
             </div>
           </div>
