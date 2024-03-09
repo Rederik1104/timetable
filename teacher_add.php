@@ -6,6 +6,9 @@ $subject2 = htmlentities($_POST["s2"]);
 session_start();
 $userID = $_SESSION["userID"];
 
+$subject1 = (int)$subject1;
+$subject2 = (int)$subject2;
+$userID = (int)$userID;
 
 echo $first_name, $last_name, $subject1, $subject2, $userID;
 
