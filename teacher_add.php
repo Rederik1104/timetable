@@ -29,7 +29,7 @@ catch(PDOException $e) {
 
 $stmt = "INSERT INTO teacher (name, vorname, subjectID1, subjectID2, createdBY) VALUES ($last_name, $first_name, $subject1, $subject2, $userID)";
 if($stmt == TRUE){
-    //header("location: infos.php");
+    header("location: infos.php");
 }
 
 ?>
