@@ -72,6 +72,12 @@
 						  $id = $_SESSION["userID"];
 						  $stmt = $pdo->query("SELECT * FROM teacher WHERE createdBY = $id");
 						  while($row = $stmt->fetch()){
+                $id1 = $row['subjectID1'];
+                $id2 = $row['subjectID2'];
+                $sqlID1 = $pdo->query("SELECT subject_name FROM subject WHERE ID = $id1");
+                $sqlID2 = $sqlID1->fetch();
+                $sqlID3 = $pdo->query("SELECT subject_name FROM subject WHERE ID = $id2");
+                $sqlID4 = $sqlID3->fetch();
                 ?>
 							  <div class="card_add">
           			  <div class="card" style="width: 18rem;">
@@ -80,8 +86,8 @@
               			  <p class="card-text">Some quick information on your teacher</p>
             			</div>
             		  <ul class="list-group list-group-flush">
-              		  <li class="list-group-item"><?php echo $row["subjectID1"] ?></li>
-              		  <li class="list-group-item"><?php echo $row["subjectID2"] ?></li>
+              		  <li class="list-group-item"><?php echo $sqlID2["subject_name"] ?></li>
+              		  <li class="list-group-item"><?php echo $sqlID4["subject_name"] ?></li>
             		  </ul>
             		  <div class="card-body">
               		  <a href="teacher_add.php" class="card-link">Card link</a>

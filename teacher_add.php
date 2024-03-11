@@ -27,9 +27,16 @@ catch(PDOException $e) {
     exit('Unable to connect Database.');
 }
 
-$stmt = "INSERT INTO teacher (name, vorname, subjectID1, subjectID2, createdBY) VALUES ($last_name, $first_name, $subject1, $subject2, $userID)";
-if($stmt->excecute()){
-  header("location: infos.php");
+$sql = "INSERT INTO teacher (name, vorname, subjectID1, subjectID2, createdBY) VALUES (:last_name, :first_name, :subject1, :subject2, :userID)";
+$stmt = $pdo->prepare($sql);
+$stmt->bindParam(':last_name', $last_name);
+$stmt->bindParam(':first_name', $first_name);
+$stmt->bindParam(':subject1', $subject1);
+$stmt->bindParam(':subject2', $subject2);
+$stmt->bindParam(':userID', $userID);
+
+if($stmt->execute()){
+    header("location: infos.php");
 }
 
 ?>
