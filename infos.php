@@ -53,39 +53,41 @@
             </div>
           </div>
 					<?php
-						$dbconfig['host'] = 'localhost';
-						$dbconfig['user'] = 'root';
-           $dbconfig['base'] = 'login';
-           $dbconfig['pass'] = '';
-           $dbconfig['char'] = 'utf8';
+					  $dbconfig['host'] = 'localhost';
+					  $dbconfig['user'] = 'root';
+            $dbconfig['base'] = 'login';
+            $dbconfig['pass'] = '';
+            $dbconfig['char'] = 'utf8';
                           
-           try {
-            $pdo = new
-            PDO('mysql:host='.$dbconfig['host'].';dbname='.$dbconfig['base'].';charset='.$dbconfig['char'].';',
-            $dbconfig['user'], $dbconfig['pass']);
-           }
-           catch(PDOException $e) {
-            exit('Unable to connect Database.');
-           }
+            try {
+              $pdo = new
+              PDO('mysql:host='.$dbconfig['host'].';dbname='.$dbconfig['base'].';charset='.$dbconfig['char'].';',
+              $dbconfig['user'], $dbconfig['pass']);
+            }
+            catch(PDOException $e) {
+              exit('Unable to connect Database.');
+            }
 						
-						Session_start();
-						$id = $_Session("id");
-						$stmt = "SELECT * FROM teacher WHERE id = $id"
-						while($row = $stmt->fetch()){
-							<div class="card_add">
-          			<div class="card" style="width: 18rem;">
-            			<div class="card-body">
-              			<h5 class="card-title"><?php echo "row["nachname"], row["vorname"]" ?></h5>
-              			<p class="card-text">Some quick information on your teacher</p>
+						  session_start();
+						  $id = $_SESSION["userID"];
+						  $stmt = $pdo->query("SELECT * FROM teacher WHERE createdBY = $id");
+						  while($row = $stmt->fetch()){
+                ?>
+							  <div class="card_add">
+          			  <div class="card" style="width: 18rem;">
+            			  <div class="card-body">
+              			  <h5 class="card-title"><?php echo $row['name'],", ", $row['vorname'] ?></h5>
+              			  <p class="card-text">Some quick information on your teacher</p>
             			</div>
-            		<ul class="list-group list-group-flush">
-              		<li class="list-group-item"><?php echo row["subject1"] ?></li>
-              		<li class="list-group-item"><?php echo row["subject2"] ?></li>
-            		</ul>
-            		<div class="card-body">
-              		<a href="teacher_add.php" class="card-link">Card link</a>
-            		</div>
-          		</div>
+            		  <ul class="list-group list-group-flush">
+              		  <li class="list-group-item"><?php echo $row["subjectID1"] ?></li>
+              		  <li class="list-group-item"><?php echo $row["subjectID2"] ?></li>
+            		  </ul>
+            		  <div class="card-body">
+              		  <a href="teacher_add.php" class="card-link">Card link</a>
+            		  </div>
+          		  </div>
+              <?php
 						}
 					?>
 					
