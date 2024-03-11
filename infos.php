@@ -49,7 +49,7 @@
               <li class="list-group-item">subject 2</li>
             </ul>
             <div class="card-body">
-              <a href="teacher_add.php" class="card-link">Card link</a>
+                <button type="submit" class="btn-close" aria-label="Close"></button>
             </div>
           </div>
 					<?php
@@ -90,7 +90,9 @@
               		  <li class="list-group-item"><?php echo $sqlID4["subject_name"] ?></li>
             		  </ul>
             		  <div class="card-body">
-              		  <a href="teacher_add.php" class="card-link">Card link</a>
+              		  <form action="teacher_delete.php?teacherID=<?php echo $row['id'] ?>" method="post">
+                      <button type="submit" class="btn-close" aria-label="Close"></button>
+                    </form>
             		  </div>
           		  </div>
               <?php
