@@ -70,7 +70,7 @@
 						
 						  session_start();
 						  $id = $_SESSION["userID"];
-						  $stmt = $pdo->query("SELECT * FROM teacher WHERE createdBY = $id");
+						  $stmt = $pdo->query("SELECT * FROM teacher WHERE createdBY = $id ORDER BY name");
 						  while($row = $stmt->fetch()){
                 $id1 = $row['subjectID1'];
                 $id2 = $row['subjectID2'];
@@ -83,7 +83,7 @@
           			  <div class="card" style="width: 18rem;">
             			  <div class="card-body">
               			  <h5 class="card-title"><?php echo $row['name'],", ", $row['vorname'] ?></h5>
-              			  <p class="card-text">Some quick information on your teacher</p>
+              			  <p class="card-text"><?php echo $row["discription"] ?></p>
             			</div>
             		  <ul class="list-group list-group-flush">
               		  <li class="list-group-item"><?php echo $sqlID2["subject_name"] ?></li>
@@ -135,7 +135,7 @@
                           catch(PDOException $e) {
                               exit('Unable to connect Database.');
                           }
-                          $stmt = $pdo->query("SELECT subject_name FROM subject");
+                          $stmt = $pdo->query("SELECT subject_name FROM subject ORDER BY subject_name");
                           $zaehler = 1;
                           while($row = $stmt->fetch()){
                             ?>
@@ -162,7 +162,7 @@
                           catch(PDOException $e) {
                               exit('Unable to connect Database.');
                           }
-                          $stmt = $pdo->query("SELECT subject_name FROM subject");
+                          $stmt = $pdo->query("SELECT subject_name FROM subject ORDER BY subject_name");
                           $zaehler = 1;
                           while($row = $stmt->fetch()){
                             ?>
@@ -172,6 +172,10 @@
                           }
                         ?>
                       </select>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text">little discription</span>
+                        <input type="text" class="form-control" placeholder="..." aria-label="discription" name="discription">
+                      </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
