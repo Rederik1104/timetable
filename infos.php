@@ -3,6 +3,7 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="jquery-1.7.1.min.js"></script>
     <link rel="stylesheet" href="infos.css">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,6 +39,83 @@
     </div>
   </nav>
   <main>
+
+  <script>
+    function changeForm(value){
+      var js_value = value;
+      window.location.href = "filter.php?js_value=" + js_value;
+    }
+  </script>
+
+    <div class="filter">
+      <label for="form-select">Filter</label>
+      <?php
+      
+        $dbconfig['host'] = 'localhost';
+        $dbconfig['user'] = 'root';
+        $dbconfig['base'] = 'login';
+        $dbconfig['pass'] = '';
+        $dbconfig['char'] = 'utf8';
+                      
+        try {
+          $pdo = new
+          PDO('mysql:host='.$dbconfig['host'].';dbname='.$dbconfig['base'].';charset='.$dbconfig['char'].';',
+          $dbconfig['user'], $dbconfig['pass']);
+        }
+        catch(PDOException $e) {
+          exit('Unable to connect Database.');
+        }
+
+        $sql = "SELECT * FROM filter";
+        $stmt = $pdo->query($sql)->fetch();
+        if($stmt["ln"] == 1){
+          ?>
+          <select onchange="changeForm(this.value)" class="form-select" aria-label="Default select example" id="filter" name="filter" style="width: 200px;">
+            <option value="1" selected>last name</option>
+            <option value="2">first name</option>
+            <option value="3">subject 1</option>
+            <option value="4">subject 2</option>
+          </select>
+          <?php
+          $filter = 1;
+        }
+        else if($stmt["fn"] == 1){
+          ?>
+          <select onchange="changeForm(this.value)" class="form-select" aria-label="Default select example" id="filter" name="filter" style="width: 200px;">
+            <option value="1">last name</option>
+            <option value="2" selected>first name</option>
+            <option value="3">subject 1</option>
+            <option value="4">subject 2</option>
+          </select>
+          <?php
+          $filter = 2;
+        }
+        else if($stmt["s1"] == 1){
+          ?>
+          <select onchange="changeForm(this.value)" class="form-select" aria-label="Default select example" id="filter" name="filter" style="width: 200px;">
+            <option value="1">last name</option>
+            <option value="2">first name</option>
+            <option value="3" selected>subject 1</option>
+            <option value="4">subject 2</option>
+          </select>
+          <?php
+          $filter = 3;
+        }
+        else if($stmt["s2"] == 1){
+          ?>
+          <select onchange="changeForm(this.value)" class="form-select" aria-label="Default select example" id="filter" name="filter" style="width: 200px;">
+            <option value="1">last name</option>
+            <option value="2">first name</option>
+            <option value="3">subject 1</option>
+            <option value="4" selected>subject 2</option>
+          </select>
+          <?php
+          $filter = 4;
+        }
+      ?>
+    </div>
+    
+
       <div style="display: flex; flex-direction: row;" class="teacher-card">
         <div class="card_add">
           <div class="card" style="width: 18rem;">
@@ -72,7 +150,20 @@
 						
 						  session_start();
 						  $id = $_SESSION["userID"];
-						  $stmt = $pdo->query("SELECT * FROM teacher WHERE createdBY = $id ORDER BY name");
+              if($filter == 1){
+                $stmt = $pdo->query("SELECT * FROM teacher WHERE createdBY = $id ORDER BY name");
+              }
+              else if($filter == 2){
+                $stmt = $pdo->query("SELECT * FROM teacher WHERE createdBY = $id ORDER BY vorname");
+              }
+              else if($filter == 3){
+                $stmt = $pdo->query("SELECT teacher.*, subject.subject_name FROM teacher JOIN subject ON teacher.subjectID1 = subject.ID WHERE teacher.createdBY = $id ORDER BY subject.subject_name");
+              }
+              else if($filter == 4){
+                $stmt = $pdo->query("SELECT teacher.*, subject.subject_name FROM teacher JOIN subject ON teacher.subjectID2 = subject.ID WHERE teacher.createdBY = $id ORDER BY subject.subject_name");
+              }
+						  
+              
 						  while($row = $stmt->fetch()){
                 $id1 = $row['subjectID1'];
                 $id2 = $row['subjectID2'];

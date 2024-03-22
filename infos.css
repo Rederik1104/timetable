@@ -1,9 +1,21 @@
 .card{
-    margin-top: 80px;
+    margin-top: 40px;
     margin-left: 20px;
 }
 .card_add{
     display: flex;
     flex-direction: row;
 }
-
+.filter{
+    margin-top:80px; 
+    width: 400px; 
+    display:flex; 
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    margin-left: 20px;
+    row-gap: 10px;
+}
+#filter{
+    margin-left: 10px;
+}
