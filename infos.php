@@ -162,8 +162,7 @@
               else if($filter == 4){
                 $stmt = $pdo->query("SELECT teacher.*, subject.subject_name FROM teacher JOIN subject ON teacher.subjectID2 = subject.ID WHERE teacher.createdBY = $id ORDER BY subject.subject_name");
               }
-						  
-              
+
 						  while($row = $stmt->fetch()){
                 $id1 = $row['subjectID1'];
                 $id2 = $row['subjectID2'];
@@ -231,13 +230,11 @@
                           catch(PDOException $e) {
                               exit('Unable to connect Database.');
                           }
-                          $stmt = $pdo->query("SELECT subject_name FROM subject ORDER BY subject_name");
-                          $zaehler = 1;
+                          $stmt = $pdo->query("SELECT * FROM subject ORDER BY subject_name");
                           while($row = $stmt->fetch()){
                             ?>
-                            <option value = <?php echo $zaehler?>><?php echo $row["subject_name"]?></option>
+                            <option value = <?php echo $row["ID"]?>><?php echo $row["subject_name"]?></option>
                             <?php
-                            $zaehler += 1;
                           }
                         ?>
                       </select>
@@ -258,13 +255,11 @@
                           catch(PDOException $e) {
                               exit('Unable to connect Database.');
                           }
-                          $stmt = $pdo->query("SELECT subject_name FROM subject ORDER BY subject_name");
-                          $zaehler = 1;
+                          $stmt = $pdo->query("SELECT * FROM subject ORDER BY subject_name");
                           while($row = $stmt->fetch()){
                             ?>
-                            <option value = <?php echo $zaehler?>><?php echo $row["subject_name"]?></option>
+                            <option value = <?php echo $row["ID"]?>><?php echo $row["subject_name"]?></option>
                             <?php
-                            $zaehler += 1;
                           }
                         ?>
                       </select>
