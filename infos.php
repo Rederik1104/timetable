@@ -282,7 +282,6 @@
           <div class="card" style="width: 18rem;">
             <div class="card-body">
               <h5 class="card-title">Room</h5>
-              <p class="card-text">Some quick information on this room</p>
             </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">room name</li>
@@ -292,6 +291,46 @@
             </div>
           </div>
         </div>
+        
+        <?php
+
+        $dbconfig['host'] = 'localhost';
+        $dbconfig['user'] = 'root';
+        $dbconfig['base'] = 'login';
+        $dbconfig['pass'] = '';
+        $dbconfig['char'] = 'utf8';
+
+        try {
+            $pdo = new
+            PDO('mysql:host='.$dbconfig['host'].';dbname='.$dbconfig['base'].';charset='.$dbconfig['char'].';',
+            $dbconfig['user'], $dbconfig['pass']);
+        }
+        catch(PDOException $e) {
+            exit('Unable to connect Database.');
+        }
+        $sqlRoom = $pdo->query("SELECT * FROM room ORDER BY building");
+
+        While($row = $sqlRoom->fetch()){
+          ?>
+            <div class="room-cards" style="display:flex; flex-direction: row">
+              <div class="card_add">
+                <div class="card" style="width: 18rem;">
+                  <div class="card-body">
+                    <h5 class="card-title"><?php echo $row["building"], $row["room"]; ?></h5>
+                  </div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><?php echo $row["description"]; ?></li>
+                  </ul>
+                  <div class="card-body">
+                    <button type="submit" class="btn-close" aria-label="Close"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <?php
+        }
+
+        ?>
         <button type="button" class="btnbtn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal_room" style="margin-top: 180px; margin-left: 50px; width: 80px; height: 80px; background: none; border: none;"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
               <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
               <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
@@ -314,7 +353,7 @@
                         <input type="text" class="form-control" placeholder="..." aria-label="number" name="number">
                       </div>
                       <div class="input-group mb-3">
-                        <span class="input-group-text">little discription</span>
+                        <span class="input-group-text">room name (description)</span>
                         <input type="text" class="form-control" placeholder="..." aria-label="discription" name="discription">
                       </div> 
                       <div class="modal-footer">
@@ -328,9 +367,12 @@
               </div>
             </div>
           </div>
+        
           
           
   </main>
-    
+  
+  
+  <br><br><br>
 </body>
 </html>
