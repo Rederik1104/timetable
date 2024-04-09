@@ -277,6 +277,66 @@
               </div>
             </div>
           </div>
+      
+      <script>
+        function changeForm_room(value){
+          window.location.href = "room_filter.php?value=" + value;
+        }
+      </script>
+
+      <div class="filter"> 
+        <label for="filter">Filter</label>
+        <?php
+        $dbconfig['host'] = 'localhost';
+        $dbconfig['user'] = 'root';
+        $dbconfig['base'] = 'login';
+        $dbconfig['pass'] = '';
+        $dbconfig['char'] = 'utf8';
+                      
+        try {
+          $pdo = new
+          PDO('mysql:host='.$dbconfig['host'].';dbname='.$dbconfig['base'].';charset='.$dbconfig['char'].';',
+          $dbconfig['user'], $dbconfig['pass']);
+        }
+        catch(PDOException $e) {
+          exit('Unable to connect Database.');
+        }
+
+        $sql = "SELECT * FROM filterroom";
+        $stmt = $pdo->query($sql)->fetch();
+        if($stmt["building"] == 1){
+          ?>
+          <select onchange="changeForm_room(this.value)" class="form-select" aria-label="Default select example" id="filter" name="filter" style="width: 200px;">
+          <option value="1" selected>building</option>
+          <option value="2">number</option>
+          <option value="3">description</option>
+        </select> 
+        <?php
+        $filterroom = 1;
+        }
+        else if($stmt["number"] == 1){
+          ?>
+          <select onchange="changeForm_room(this.value)" class="form-select" aria-label="Default select example" id="filter" name="filter" style="width: 200px;">
+          <option value="1">building</option>
+          <option value="2" selected>number</option>
+          <option value="3">description</option>
+        </select> 
+        <?php
+        $filterroom = 2;
+        }
+        else if($stmt["description"] == 1){
+          ?>
+          <select onchange="changeForm_room(this.value)" class="form-select" aria-label="Default select example" id="filter" name="filter" style="width: 200px;">
+          <option value="1">building</option>
+          <option value="2">number</option>
+          <option value="3" selected>description</option>
+        </select> 
+        <?php
+        $filterroom = 3;
+        }
+        ?>
+        
+      </div>
       <div class="room-cards" style="display:flex; flex-direction: row">
         <div class="card_add">
           <div class="card" style="width: 18rem;">
@@ -308,7 +368,16 @@
         catch(PDOException $e) {
             exit('Unable to connect Database.');
         }
-        $sqlRoom = $pdo->query("SELECT * FROM room ORDER BY building");
+        if($filterroom == 1){
+          $sqlRoom = $pdo->query("SELECT * FROM room ORDER BY building");
+        }
+        else if($filterroom == 2){
+          $sqlRoom = $pdo->query("SELECT * FROM room ORDER BY room");
+        }
+        else if($filterroom == 3){
+          $sqlRoom = $pdo->query("SELECT * FROM room ORDER BY description");
+        }
+        
 
         While($row = $sqlRoom->fetch()){
           ?>

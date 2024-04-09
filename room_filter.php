@@ -1,6 +1,6 @@
 <?php
 
-$value = $_GET["js_value"];
+$value = $_GET["value"];
 
 $dbconfig['host'] = 'localhost';
 $dbconfig['user'] = 'root';
@@ -18,22 +18,17 @@ catch(PDOException $e) {
 }
 
 if($value == "1"){
-    $sql = "UPDATE filter SET ln = true, fn = false, s1 = false, s2 = false";
+    $sql = "UPDATE filterroom SET building = true, number = false, description = false";
 }
 else if($value == "2"){
-    $sql = "UPDATE filter SET ln = false, fn = true, s1 = false, s2 = false";
-}
-else if($value == "3"){
-    $sql = "UPDATE filter SET ln = false, fn = false, s1 = true, s2 = false";
+    $sql = "UPDATE filterroom SET building = false, number = true, description = false";
 }
 else{
-    $sql = "UPDATE filter SET ln = false, fn = false, s1 = false, s2 = true";
+    $sql = "UPDATE filterroom SET building = false, number = false, description = true";
 }
 
 if($pdo->query($sql)){
     header("Location: infos.php");
 }
-
-
 
 ?>
