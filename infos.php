@@ -321,9 +321,12 @@
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item"><?php echo $row["description"]; ?></li>
                   </ul>
-                  <div class="card-body">
-                    <button type="submit" class="btn-close" aria-label="Close"></button>
-                  </div>
+                  <form action="room_delete.php?roomID=<?php echo $row["roomID"] ?>" method="POST">
+                    <div class="card-body">
+                      <button type="submit" class="btn-close" aria-label="Close"></button>
+                    </div>
+                  </form>
+                  
                 </div>
               </div>
             </div>
