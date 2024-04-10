@@ -37,7 +37,6 @@
     }
 
     
-
 ?>
 <html lang="de">
 <head>
@@ -48,10 +47,10 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <form action="index.php" method="POST">
+    <form action="register_failure.php" method="POST">
         <h1>Account Erstellen</h1>
         <div class="inputs_container">
-            <input type="text" placeholder="Benutzername" name="username" autocomplete="off">
+            <input type="text" placeholder="username not available" name="username" autocomplete="off">
             <input type="text" placeholder="Email" name="email" autocomplete="off">
             <input type="password" placeholder="Passwort" name="password" autocomplete="off">
         </div>
