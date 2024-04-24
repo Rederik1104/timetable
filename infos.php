@@ -434,14 +434,101 @@
                       </div> 
                     </form>  
                 </div>
-                
-                
               </div>
             </div>
           </div>
+      
+    <div class="subject-cards" style="display:flex; flex-direction: row">
+      <div class="card_add">
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">Subject</h5>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">color</li>
+          </ul>
+          <div class="card-body">
+            <button type="submit" class="btn-close" aria-label="Close"></button>
+          </div>
+        </div>
+      </div>
+    
+
+    <?php
+
+        $dbconfig['host'] = 'localhost';
+        $dbconfig['user'] = 'root';
+        $dbconfig['base'] = 'login';
+        $dbconfig['pass'] = '';
+        $dbconfig['char'] = 'utf8';
+
+        try {
+            $pdo = new
+            PDO('mysql:host='.$dbconfig['host'].';dbname='.$dbconfig['base'].';charset='.$dbconfig['char'].';',
+            $dbconfig['user'], $dbconfig['pass']);
+        }
+        catch(PDOException $e) {
+            exit('Unable to connect Database.');
+        }
         
-          
-          
+        $sqlSubject = $pdo->query("SELECT * FROM subject ORDER BY subject_name");
+        While($row = $sqlSubject->fetch()){
+
+    ?>
+
+    <div class="subject-cards" style="display:flex; flex-direction: row">
+      <div class="card_add">
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title"><?php echo $row["subject_name"]; ?></h5>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><?php echo $row["color"]; ?></li>
+          </ul>
+          <form action="subject_delete.php?roomID=<?php echo $row["ID"] ?>" method="POST">
+            <div class="card-body">
+              <button type="submit" class="btn-close" aria-label="Close"></button>
+            </div>
+          </form>
+                  
+        </div>
+      </div>
+    </div>
+    
+
+    <?php
+        }
+    ?>
+      <button type="button" class="btnbtn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal_subject" style="margin-top: 180px; margin-left: 50px; width: 80px; height: 80px; background: none; border: none;"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal fade" id="exampleModal_subject" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">New subject</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="subject_add.php" method="post">
+                      <div class="input-group mb-3">
+                        <span class="input-group-text">subject name</span>
+                        <input type="text" class="form-control" placeholder="..." aria-label="builing" name="building">
+                        <span class="input-group-text">color</span>
+                        <input type="text" class="form-control" placeholder="..." aria-label="number" name="number">
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                      </div> 
+                    </form>  
+                </div>
+              </div>
+            </div>
+          </div>
   </main>
   
   
