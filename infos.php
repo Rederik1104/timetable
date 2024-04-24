@@ -277,7 +277,7 @@
               </div>
             </div>
           </div>
-      
+      <hr>
       <script>
         function changeForm_room(value){
           window.location.href = "room_filter.php?value=" + value;
@@ -437,7 +437,7 @@
               </div>
             </div>
           </div>
-      
+    <hr> 
     <div class="subject-cards" style="display:flex; flex-direction: row">
       <div class="card_add">
         <div class="card" style="width: 18rem;">

@@ -19,6 +19,17 @@
 #filter{
     margin-left: 10px;
 }
-
+.teacher-card{
+    display: flex;
+    flex-wrap: wrap;
+}
+.room-cards{
+    display: flex;
+    flex-wrap: wrap;
+}
+.subject-cards{
+    display: flex;
+    flex-wrap: wrap;
+}
 
 
