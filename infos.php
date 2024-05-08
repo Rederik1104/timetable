@@ -31,7 +31,7 @@
               <a class="nav-link" href="stundenplan.html">Timetable</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="user.html">User</a>
+                <a class="nav-link" href="user.php">User</a>
               </li>
           </ul>
         </div>

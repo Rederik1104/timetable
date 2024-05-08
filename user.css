@@ -1,0 +1,14 @@
+main{
+    margin-top: 80px;
+    margin-left: 15px;
+}
+#emailAdresse{
+    border-width: 1,5px;
+    border-style: solid;
+    background-color: #BBBBBB;
+    
+}
+button{
+    background: none;
+    border: none;
+}
