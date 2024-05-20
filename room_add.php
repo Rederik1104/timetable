@@ -1,28 +1,18 @@
 <?php
+    session_start();
     $building = htmlentities($_POST["building"]);
     $room = htmlentities($_POST["number"]);
     $description = htmlentities($_POST["discription"]);
+    $userID = $_SESSION["userID"];
 
-    $dbconfig['host'] = 'localhost';
-    $dbconfig['user'] = 'root';
-    $dbconfig['base'] = 'login';
-    $dbconfig['pass'] = '';
-    $dbconfig['char'] = 'utf8';
-                            
-    try {
-        $pdo = new
-        PDO('mysql:host='.$dbconfig['host'].';dbname='.$dbconfig['base'].';charset='.$dbconfig['char'].';',
-        $dbconfig['user'], $dbconfig['pass']);
-    }
-    catch(PDOException $e) {
-        exit('Unable to connect Database.');
-    }
+    include "database.php";
 
-    $sql = "INSERT INTO room (building, room, description) VALUES (:building, :room, :discription)";
+    $sql = "INSERT INTO room (building, room, description, createdBY) VALUES (:building, :room, :discription, :userID)";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':building', $building);
     $stmt->bindParam(':room', $room);
     $stmt->bindParam(':discription', $description);
+    $stmt->bindParam(':userID', $userID);
     if($stmt->execute()){
         header("Location: infos.php");
     }

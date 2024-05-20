@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,23 +45,10 @@
           <label for="email">E-Mail: </label>
           <label for="email_picture" id="emailAdresse">
             <?php
-              session_start();
+              
               $email = $_SESSION["userID"];
               
-              $dbconfig['host'] = 'localhost';
-              $dbconfig['user'] = 'root';
-              $dbconfig['base'] = 'login';
-              $dbconfig['pass'] = '';
-              $dbconfig['char'] = 'utf8';
-                            
-              try {
-                $pdo = new
-                PDO('mysql:host='.$dbconfig['host'].';dbname='.$dbconfig['base'].';charset='.$dbconfig['char'].';',
-                $dbconfig['user'], $dbconfig['pass']);
-              }
-              catch(PDOException $e) {
-                exit('Unable to connect Database.');
-              }
+              include "database.php";
 
               $emailSQL = $pdo->query("SELECT email FROM users WHERE id = $email");
               while($row = $emailSQL->fetch()){

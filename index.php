@@ -1,11 +1,10 @@
 <?php
-    $dsn = "mysql:dbname=login;host=localhost";
-    $username = "root";
-    $password = "";
+    $dsn = "mysql:dbname=erik;host=Content.goatserver.de";
+    $username = "erik";
+    $password = "erik.Goatserver";
     $con = new PDO($dsn, $username, $password);
 
     if(isset($_POST["submit"])){
-        var_dump($_POST);
         $usern = $_POST["username"];
         $usern = strval($usern);
         $email = $_POST["email"];
@@ -22,6 +21,7 @@
         else{
             //Users existiert bereits
             header("Location: register_failure.php");
+            exit();
         }
     
     }
@@ -34,6 +34,7 @@
         $stmt->bindParam("password", $password);
         $stmt->execute();
         header("Location: login.php");
+        exit();
     }
 
     

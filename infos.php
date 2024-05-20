@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,22 +53,8 @@
     <div class="filter">
       <label for="form-select">Filter</label>
       <?php
-      
-        $dbconfig['host'] = 'localhost';
-        $dbconfig['user'] = 'root';
-        $dbconfig['base'] = 'login';
-        $dbconfig['pass'] = '';
-        $dbconfig['char'] = 'utf8';
-                      
-        try {
-          $pdo = new
-          PDO('mysql:host='.$dbconfig['host'].';dbname='.$dbconfig['base'].';charset='.$dbconfig['char'].';',
-          $dbconfig['user'], $dbconfig['pass']);
-        }
-        catch(PDOException $e) {
-          exit('Unable to connect Database.');
-        }
 
+        include "database.php";
         $sql = "SELECT * FROM filter";
         $stmt = $pdo->query($sql)->fetch();
         if($stmt["ln"] == 1){
@@ -133,22 +122,9 @@
           </div>
         </div>
 					<?php
-					  $dbconfig['host'] = 'localhost';
-					  $dbconfig['user'] = 'root';
-            $dbconfig['base'] = 'login';
-            $dbconfig['pass'] = '';
-            $dbconfig['char'] = 'utf8';
-                          
-            try {
-              $pdo = new
-              PDO('mysql:host='.$dbconfig['host'].';dbname='.$dbconfig['base'].';charset='.$dbconfig['char'].';',
-              $dbconfig['user'], $dbconfig['pass']);
-            }
-            catch(PDOException $e) {
-              exit('Unable to connect Database.');
-            }
+					  include "database.php";
 						
-						  session_start();
+						  
 						  $id = $_SESSION["userID"];
               if($filter == 1){
                 $stmt = $pdo->query("SELECT * FROM teacher WHERE createdBY = $id ORDER BY name");
@@ -216,20 +192,9 @@
                       <select class="form-select" aria-label="Default select example" name="s1">
                         <option selected>Open this select menu</option>
                         <?php
-                          $dbconfig['host'] = 'localhost';
-                          $dbconfig['user'] = 'root';
-                          $dbconfig['base'] = 'login';
-                          $dbconfig['pass'] = '';
-                          $dbconfig['char'] = 'utf8';
-                          
-                          try {
-                              $pdo = new
-                              PDO('mysql:host='.$dbconfig['host'].';dbname='.$dbconfig['base'].';charset='.$dbconfig['char'].';',
-                              $dbconfig['user'], $dbconfig['pass']);
-                          }
-                          catch(PDOException $e) {
-                              exit('Unable to connect Database.');
-                          }
+
+                          include "database.php";
+
                           $stmt = $pdo->query("SELECT * FROM subject ORDER BY subject_name");
                           while($row = $stmt->fetch()){
                             ?>
@@ -241,20 +206,7 @@
                       <select class="form-select" aria-label="Default select example" name="s2">
                         <option selected>Open this select menu</option>
                         <?php
-                          $dbconfig['host'] = 'localhost';
-                          $dbconfig['user'] = 'root';
-                          $dbconfig['base'] = 'login';
-                          $dbconfig['pass'] = '';
-                          $dbconfig['char'] = 'utf8';
-                          
-                          try {
-                              $pdo = new
-                              PDO('mysql:host='.$dbconfig['host'].';dbname='.$dbconfig['base'].';charset='.$dbconfig['char'].';',
-                              $dbconfig['user'], $dbconfig['pass']);
-                          }
-                          catch(PDOException $e) {
-                              exit('Unable to connect Database.');
-                          }
+                          include "database.php";
                           $stmt = $pdo->query("SELECT * FROM subject ORDER BY subject_name");
                           while($row = $stmt->fetch()){
                             ?>
@@ -287,20 +239,7 @@
       <div class="filter"> 
         <label for="filter">Filter</label>
         <?php
-        $dbconfig['host'] = 'localhost';
-        $dbconfig['user'] = 'root';
-        $dbconfig['base'] = 'login';
-        $dbconfig['pass'] = '';
-        $dbconfig['char'] = 'utf8';
-                      
-        try {
-          $pdo = new
-          PDO('mysql:host='.$dbconfig['host'].';dbname='.$dbconfig['base'].';charset='.$dbconfig['char'].';',
-          $dbconfig['user'], $dbconfig['pass']);
-        }
-        catch(PDOException $e) {
-          exit('Unable to connect Database.');
-        }
+        include "database.php";
 
         $sql = "SELECT * FROM filterroom";
         $stmt = $pdo->query($sql)->fetch();
@@ -354,28 +293,16 @@
         
         <?php
 
-        $dbconfig['host'] = 'localhost';
-        $dbconfig['user'] = 'root';
-        $dbconfig['base'] = 'login';
-        $dbconfig['pass'] = '';
-        $dbconfig['char'] = 'utf8';
-
-        try {
-            $pdo = new
-            PDO('mysql:host='.$dbconfig['host'].';dbname='.$dbconfig['base'].';charset='.$dbconfig['char'].';',
-            $dbconfig['user'], $dbconfig['pass']);
-        }
-        catch(PDOException $e) {
-            exit('Unable to connect Database.');
-        }
+        include "database.php";
+        $createdBY = intval($_SESSION["userID"]);
         if($filterroom == 1){
-          $sqlRoom = $pdo->query("SELECT * FROM room ORDER BY building");
+          $sqlRoom = $pdo->query("SELECT * FROM room WHERE createdBY = $createdBY ORDER BY building");
         }
         else if($filterroom == 2){
-          $sqlRoom = $pdo->query("SELECT * FROM room ORDER BY room");
+          $sqlRoom = $pdo->query("SELECT * FROM room WHERE createdBY = $createdBY ORDER BY room ");
         }
         else if($filterroom == 3){
-          $sqlRoom = $pdo->query("SELECT * FROM room ORDER BY description");
+          $sqlRoom = $pdo->query("SELECT * FROM room WHERE createdBY = $createdBY ORDER BY description");
         }
         
 
@@ -456,20 +383,7 @@
 
     <?php
 
-        $dbconfig['host'] = 'localhost';
-        $dbconfig['user'] = 'root';
-        $dbconfig['base'] = 'login';
-        $dbconfig['pass'] = '';
-        $dbconfig['char'] = 'utf8';
-
-        try {
-            $pdo = new
-            PDO('mysql:host='.$dbconfig['host'].';dbname='.$dbconfig['base'].';charset='.$dbconfig['char'].';',
-            $dbconfig['user'], $dbconfig['pass']);
-        }
-        catch(PDOException $e) {
-            exit('Unable to connect Database.');
-        }
+        include "database.php";
         
         $sqlSubject = $pdo->query("SELECT * FROM subject ORDER BY subject_name");
         While($row = $sqlSubject->fetch()){

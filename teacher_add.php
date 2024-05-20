@@ -13,20 +13,7 @@ $userID = (int)$userID;
 
 echo $first_name, $last_name, $subject1, $subject2, $userID;
 
-$dbconfig['host'] = 'localhost';
-$dbconfig['user'] = 'root';
-$dbconfig['base'] = 'login';
-$dbconfig['pass'] = '';
-$dbconfig['char'] = 'utf8';
-
-try {
-    $pdo = new
-    PDO('mysql:host='.$dbconfig['host'].';dbname='.$dbconfig['base'].';charset='.$dbconfig['char'].';',
-    $dbconfig['user'], $dbconfig['pass']);
-}
-catch(PDOException $e) {
-    exit('Unable to connect Database.');
-}
+include "database.php";
 
 $sql = "INSERT INTO teacher (name, vorname, subjectID1, subjectID2, createdBY, discription) VALUES (:last_name, :first_name, :subject1, :subject2, :userID, :discription)";
 $stmt = $pdo->prepare($sql);
