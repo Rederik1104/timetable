@@ -1,17 +1,18 @@
 <?php
+session_start();
 $first_name = htmlentities($_POST["first_name"]);
 $last_name = htmlentities($_POST["last_name"]);
 $subject1 = htmlentities($_POST["s1"]);
 $subject2 = htmlentities($_POST["s2"]);
 $discription = htmlentities($_POST["discription"]);
-session_start();
+
 $userID = $_SESSION["userID"];
 
 $subject1 = (int)$subject1;
 $subject2 = (int)$subject2;
 $userID = (int)$userID;
 
-echo $first_name, $last_name, $subject1, $subject2, $userID;
+//echo $first_name, $last_name, $subject1, $subject2, $userID;
 
 include "database.php";
 
