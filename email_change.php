@@ -1,22 +1,13 @@
 <?php
+    session_start();
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;
     use PHPMailer\PHPMailer\Exception;
+    $userID = $_SESSION["userID"];
+    $newEmail = $_POST["email1"];
     
     
     if($_POST["email1"] == $_POST["email2"]){
-
-        session_start();
-        $userID = $_SESSION["userID"];
-        $newEmail = $_POST["email1"];
-
-        include("database.php");
-
-        $emailChange = "UPDATE users SET email = :newEmail WHERE id = :id";
-        $stmt = $pdo->prepare($emailChange);
-        $stmt->bindParam(":newEmail", $newEmail);
-        $stmt->bindParam(":id", $userID);
-        if($stmt->execute()){
             //Import PHPMailer classes into the global namespace
             //These must be at the top of your script, not inside a function
             
@@ -49,22 +40,28 @@
                 //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
             
                 //Content
-                $code = rand(1000, 9999);
+                $code = rand(100000, 999999);
                 $mail->isHTML(true);                                  //Set email format to HTML
                 $mail->Subject = 'Verification, Timy';
                 $mail->Body    = "Here is your verification code: $code";
                 //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
             
                 $mail->send();
-                echo 'Message has been sent';
+                //echo 'Message has been sent';
+                $_SESSION["Vcode"] = $code;
+                header("Location: verification.php?email=$newEmail"); 
+                exit();
             } catch (Exception $e) {
-                echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                //echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                sleep(5);
+                header("Location: user.php");
+                exit();
             } 
 
 
-            //header("Location: user.php"); 
+            
         }
-    }
+
     else
     {
         
