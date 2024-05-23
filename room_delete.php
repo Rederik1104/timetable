@@ -7,6 +7,3 @@
     if($delete){
         header("Location: infos.php");
     }
-
-
-?>
