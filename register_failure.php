@@ -1,7 +1,7 @@
 <?php
-    $dsn = "mysql:dbname=login;host=localhost";
-    $username = "root";
-    $password = "";
+    $dsn = "mysql:dbname=erik;host=Content.goatserver.de";
+    $username = "erik";
+    $password = "erik.Goatserver";
     $con = new PDO($dsn, $username, $password);
 
     if(isset($_POST["submit"])){

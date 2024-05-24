@@ -1,4 +1,5 @@
 <?php
+    session_start();
     $dsn = "mysql:dbname=erik;host=Content.goatserver.de";
     $username = "erik";
     $password = "erik.Goatserver";
@@ -37,31 +38,37 @@
         exit();
     }
 
-require_once __DIR__.'/../bootstrap.php';
-    
-if(empty($_GET['state']) || (isset($_SESSION['oauth2state'])) && $_GET['state'] !== $_SESSION['oauth2state']){
-    if(isset($_SESSION['oauth2state'])){
-        unset($_SESSION['oauth2state']);
+    if(isset($_SESSION['userData'])){
+        include("database.php");
+        $nEmail = $_SESSION['userData']['email'];
+        $name = $_SESSION['userData']['given_name'];
+        $pass = $_SESSION['userData']['kid'];
+        $stmt = $pdo->query("SELECT * FROM users");
+        while($row = $stmt->fetch()){
+            if($row['username'] == $name && $row['email'] == $nEmail && $row['password'] == $pass){
+                $_SESSION["userID"] = $row['id'];
+                header("Location: infos.php");
+                exit();
+            }
+        }
+        $sql = $pdo->prepare("INSERT INTO users(username, email, password) VALUES(:username, :email, :password)");
+        $sql->bindParam(":username", $name);
+        $sql->bindParam(":email", $nEmail);
+        $sql->bindParam("password", $pass);
+        if($sql->execute()){
+            $stmt = $pdo->query("SELECT * FROM users");
+            while($row = $stmt->fetch()){
+                if($name == $row['username'] && $pass == $row['password']){
+                    $userID = $row['id'];
+                    break;
+                }
+            }
+            $_SESSION["userID"] = $userID;
+            header("Location: infos.php");
+            exit();
+        }
     }
-    die();
-}
-try{
-    $accessToken = $provider->getAccessToken(
-        'authorization_code',
-        [
-            'code' => $_GET['code']
-        ]
-        );
-        $values = $accessToken->getValues();
-        $jwt = $values['id_token'];
-        $userData = file_get_contents("https://oauth2.googleapis.com/tokeninfo?id_token=".$jwt);
-        $userData = json_decode($userData, true);
-        $_SESSION['userData'] = $userData;
-        echo "$userData";
 
-}catch(Exception $e){
-        
-}
 ?>
 <html lang="de">
 <head>
@@ -91,9 +98,20 @@ try{
             line-height: 30px;
             text-decoration: none;
         ">zum Login</a>
-        
+        <a href="google/redirect.php"  style="
+            color:white;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 19px;
+            background-image: linear-gradient(to right, rgb(162,0,255), rgb(74,15,236));
+            background-size: 100% 4px;
+            background-position: bottom;
+            background-repeat: no-repeat;
+            line-height: 30px;
+            text-decoration: none;
+            text-align:center;
+            align-items:center;
+        ">Login mit Google</a> 
     </form>
-    <a href="google/redirect.php">Login mit google</a>
     
 </body>
 </html>
