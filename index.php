@@ -80,13 +80,13 @@
 </head>
 <body>
     <form action="index.php" method="POST">
-        <h1>Account Erstellen</h1>
+        <h1>Create Account</h1>
         <div class="inputs_container">
             <input type="text" placeholder="Benutzername" name="username" autocomplete="off">
             <input type="text" placeholder="Email" name="email" autocomplete="off">
             <input type="password" placeholder="Passwort" name="password" autocomplete="off">
         </div>
-        <button name="submit">Erstellen</button>
+        <button name="submit">Create</button>
         <a href="login.php" style="
             color:white;
             font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -97,7 +97,7 @@
             background-repeat: no-repeat;
             line-height: 30px;
             text-decoration: none;
-        ">zum Login</a>
+        ">Login</a>
         <a href="google/redirect.php"  style="
             color:white;
             font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -110,7 +110,7 @@
             text-decoration: none;
             text-align:center;
             align-items:center;
-        ">Login mit Google</a> 
+        ">Login with Google</a> 
     </form>
     
 </body>

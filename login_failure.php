@@ -1,7 +1,7 @@
 <?php
-$dsn = "mysql:dbname=login;host=localhost";
-$username = "root";
-$password = "";
+$dsn = "mysql:dbname=erik;host=Content.goatserver.de";
+$username = "erik";
+$password = "erik.Goatserver";
 $con = new PDO($dsn, $username, $password);
 if (isset($_POST["submit"])){
     $username = $_POST["username"];
@@ -44,6 +44,19 @@ if (isset($_POST["submit"])){
             <input type="password" placeholder="Login fehlgeschlagen" name="password" autocomplete="off">
         </div>
         <button name="submit">Login</button>
+        <a href="index.php" style="
+            color:white;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 19px;
+            background-image: linear-gradient(to right, rgb(162,0,255), rgb(74,15,236));
+            background-size: 100% 4px;
+            background-position: bottom;
+            background-repeat: no-repeat;
+            line-height: 30px;
+            text-decoration: none;
+            text-align:center;
+            align-items:center;
+        ">back to registration</a>
     </form>
     
 </body>
