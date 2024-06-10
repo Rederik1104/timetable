@@ -7,11 +7,11 @@ if (isset($_SESSION['userData']['access_token'])) {
 
     // Sende eine Anfrage zum Widerrufen des Tokens
     $url = 'https://accounts.google.com/o/oauth2/revoke?token=' . $accessToken;
-    
+
     $opts = array(
         'http' => array(
             'method' => 'GET',
-            'ignore_errors' => true  // Um alle HTTP-Fehlercodes zu erfassen
+            'ignore_errors' => true // Um alle HTTP-Fehlercodes zu erfassen
         )
     );
 
@@ -28,6 +28,8 @@ if (isset($_SESSION['userData']['access_token'])) {
         $httpCode = explode(' ', $http_response_header[0])[1];
         if ($httpCode != '200') {
             echo 'Failed to revoke token. HTTP Status Code: ' . $httpCode;
+        } else {
+            echo 'Token successfully revoked.';
         }
     }
 }
