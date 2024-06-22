@@ -19,8 +19,13 @@ try{
         $userData = file_get_contents("https://oauth2.googleapis.com/tokeninfo?id_token=".$jwt);
         $userData = json_decode($userData, true);
         $_SESSION['userData'] = $userData;
+        $_SESSION['accessToken'] = $accessToken->getToken();
+        echo "importData";
         header("Location: https://erik.goatserver.de");
+        exit();
 
 }catch(Exception $e){
-        
+   // Fehlerbehandlung
+   echo 'Error: ' . $e->getMessage();
+   exit();     
 }

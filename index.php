@@ -74,8 +74,10 @@
             
             $mail->send();
             //echo 'Message has been sent';
-            $_SESSION["V-code"] = $code;
-            header("Location: register_verification.php?email=$email,user=$usern,password=$password,code=$code"); 
+            //$_SESSION["V-code"] = $code;
+            $locked_code = password_hash($code, PASSWORD_DEFAULT);
+
+            header("Location: register_verification.php?email=$email,user=$usern,password=$password,code=$locked_code"); 
             exit();
         } catch (Exception $e) {
             //echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";

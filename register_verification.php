@@ -2,22 +2,25 @@
     session_start();
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Content-Type: application/json');
-    
+
         try {
-            if (!isset($_SESSION["V-code"]) || !isset($_POST['user']) || !isset($_POST["email"]) || !isset($_POST['password'])) {
+            if(!isset($_GET["email"])){
+                throw new Exception("code is missing!");
+            }
+            if (!isset($_GET['code']) || !isset($_GET['user']) || !isset($_GET["email"]) || !isset($_GET['password'])) {
                 throw new Exception("Session data or email parameter missing.");         
             }
     
-            $Vcode = $_SESSION['V-code'];
-            $usern = $_POST['user'];
-            $email = $_POST['email'];
-            $password = $_POST['password'];
+            $Vcode = $_GET['code'];
+            $usern = $_GET['user'];
+            $email = $_GET['email'];
+            $password = $_GET['password'];
     
             // Benutzer-Eingabe aus POST-Daten
-            $userCode = $_POST['code'];
+            $userCode = $_GET['code'];
     
             // Überprüfung des Codes
-            if ($userCode == $Vcode) {
+            if (password_verify($userCode, $Vcode)) {
                 include("database.php");
     
                 $register = "INSERT INTO users (username, email, password) VALUES (:user, :email, :password)";
