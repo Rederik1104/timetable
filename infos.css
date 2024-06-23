@@ -5,6 +5,20 @@
 .card_add{
     display: flex;
     flex-direction: row;
+    align-items: center;
+}
+.search-bar-container {
+    display: flex;
+    align-items: center;
+    margin-left: 50px;
+}
+
+.search-bar-container input[type=search] {
+    width: 100%; /* Lässt die Suchleiste die gesamte Breite des Containers einnehmen */
+    max-width: 300px; /* Begrenzung der maximalen Breite */
+    padding: 10px;
+    border-radius: 5px; /* Runde Ecken für ein besseres Aussehen */
+    border: 1px solid #ccc;
 }
 .filter{
     margin-top:80px; 
@@ -15,6 +29,7 @@
     text-align: center;
     margin-left: 20px;
     row-gap: 10px;
+    margin-right: auto;
 }
 #filter{
     margin-left: 10px;
@@ -31,5 +46,4 @@
     display: flex;
     flex-wrap: wrap;
 }
-
 
