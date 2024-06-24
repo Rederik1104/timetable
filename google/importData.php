@@ -20,7 +20,6 @@ try{
         $userData = json_decode($userData, true);
         $_SESSION['userData'] = $userData;
         $_SESSION['accessToken'] = $accessToken->getToken();
-        echo "importData";
         header("Location: https://erik.goatserver.de");
         exit();
 

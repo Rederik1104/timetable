@@ -1,0 +1,25 @@
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.17.0.9. Set the 'ServerName' directive globally to suppress this message
+[Sun May 19 09:54:30.945306 2024] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.59 (Debian) PHP/8.2.19 configured -- resuming normal operations
+[Sun May 19 09:54:30.945343 2024] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Sun May 19 09:54:56.842412 2024] [mpm_prefork:notice] [pid 1] AH00170: caught SIGWINCH, shutting down gracefully
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.17.0.9. Set the 'ServerName' directive globally to suppress this message
+[Sun May 19 09:54:58.380336 2024] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.59 (Debian) PHP/8.2.19 configured -- resuming normal operations
+[Sun May 19 09:54:58.380364 2024] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Sun May 19 09:55:17.461116 2024] [autoindex:error] [pid 16] [client 172.17.0.1:39094] AH01276: Cannot serve directory /var/www/html/: No matching DirectoryIndex (index.php,index.html) found, and server-generated directory index forbidden by Options directive
+[Sun May 19 09:55:44.103577 2024] [autoindex:error] [pid 18] [client 172.17.0.1:41410] AH01276: Cannot serve directory /var/www/html/: No matching DirectoryIndex (index.php,index.html) found, and server-generated directory index forbidden by Options directive
+[Sun May 19 10:08:08.000595 2024] [mpm_prefork:notice] [pid 1] AH00170: caught SIGWINCH, shutting down gracefully
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.17.0.9. Set the 'ServerName' directive globally to suppress this message
+[Sun May 19 10:08:09.488074 2024] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.59 (Debian) PHP/8.2.19 configured -- resuming normal operations
+[Sun May 19 10:08:09.488103 2024] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Mon May 20 13:16:26.833237 2024] [php:error] [pid 22] [client 172.17.0.1:35540] script '/var/www/html/database.php' not found or unable to stat
+[Thu May 23 09:20:26.897425 2024] [mpm_prefork:notice] [pid 1] AH00170: caught SIGWINCH, shutting down gracefully
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.17.0.5. Set the 'ServerName' directive globally to suppress this message
+[Thu May 23 09:21:26.910684 2024] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.59 (Debian) PHP/8.2.19 configured -- resuming normal operations
+[Thu May 23 09:21:26.910720 2024] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Fri May 24 09:08:05.874608 2024] [php:error] [pid 20] [client 172.17.0.1:43082] script '/var/www/html/vendor/upload.php' not found or unable to stat
+[Fri May 24 13:30:59.507719 2024] [php:error] [pid 17] [client 172.17.0.1:60390] script '/var/www/html/google/importData.php' not found or unable to stat
+[Thu May 30 17:54:42.510042 2024] [php:error] [pid 17] [client 172.17.0.1:44096] script '/var/www/html/register_verification.php' not found or unable to stat, referer: https://erik.goatserver.de/index.php
+[Thu Jun 20 08:26:51.498056 2024] [mpm_prefork:notice] [pid 1] AH00170: caught SIGWINCH, shutting down gracefully
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.17.0.6. Set the 'ServerName' directive globally to suppress this message
+[Thu Jun 20 12:44:19.687465 2024] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.59 (Debian) PHP/8.2.19 configured -- resuming normal operations
+[Thu Jun 20 12:44:19.687506 2024] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
