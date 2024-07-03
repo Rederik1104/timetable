@@ -53,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="container">
     <h2>Verification Code</h2>
+    <?= $_SESSION['Vcode'] ?>
     <label for="digit-1">You received a verification code on your new email address. Please type it in the boxes below.</label>
     <div class="code-inputs">
         <input type="text" id="digit-1" maxlength="1" oninput="moveToNext(this, 'digit-2')" autofocus>

@@ -67,6 +67,8 @@
             
             //Content
             $code = rand(100000, 999999);
+            $_SESSION["V-code"] = $code;
+            
             $mail->isHTML(true);                                  //Set email format to HTML
             $mail->Subject = 'Verification, Timy';
             $mail->Body    = "Here is your verification code: $code";
@@ -77,7 +79,7 @@
             //$_SESSION["V-code"] = $code;
             $locked_code = password_hash($code, PASSWORD_DEFAULT);
 
-            header("Location: register_verification.php?email=$email,user=$usern,password=$password,code=$locked_code"); 
+            header("Location: register_verification.php?email=$email&user=$usern&password=$password"); 
             exit();
         } catch (Exception $e) {
             //echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";

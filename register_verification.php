@@ -7,24 +7,28 @@
             if(!isset($_GET["email"])){
                 throw new Exception("code is missing!");
             }
-            if (!isset($_GET['code']) || !isset($_GET['user']) || !isset($_GET["email"]) || !isset($_GET['password'])) {
+            if (!$_SESSION['V-code'] || !isset($_GET['user']) || !isset($_GET["email"]) || !isset($_GET['password'])) {
                 throw new Exception("Session data or email parameter missing.");         
             }
-    
-            $Vcode = $_GET['code'];
+            
+            $Vcode = $_SESSION['V-code'];
             $usern = $_GET['user'];
             $email = $_GET['email'];
             $password = $_GET['password'];
     
             // Benutzer-Eingabe aus POST-Daten
-            $userCode = $_GET['code'];
+            
+            $userCode = $_POST['code'];
+            
+            
+   
     
             // Überprüfung des Codes
-            if (password_verify($userCode, $Vcode)) {
+            if ($userCode == $Vcode) {
                 include("database.php");
     
                 $register = "INSERT INTO users (username, email, password) VALUES (:user, :email, :password)";
-                $register = $pdo->prepare($emailChange);
+                $register = $pdo->prepare($register);
                 $register->bindParam(":email", $email);
                 $register->bindParam(":user", $usern);
                 $register->bindParam(":password", $password);
@@ -57,6 +61,7 @@
     
     <div class="container">
         <h2>Verification Code</h2>
+        <?= $_SESSION['V-code'] ?>
         <label for="digit-1">You received a verification code on your new email address. Please type it in the boxes below.</label>
         <div class="code-inputs">
             <input type="text" id="digit-1" maxlength="1" oninput="moveToNext(this, 'digit-2')" autofocus>
@@ -93,6 +98,7 @@
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 try {
+                    console.log(xhr.responseText);
                     const response = JSON.parse(xhr.responseText);
                     const messageElement = document.getElementById("message");
                     if (response.success) {
