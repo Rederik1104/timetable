@@ -2,7 +2,7 @@
 $dbconfig['host'] = 'Content.goatserver.de';
 $dbconfig['user'] = 'erik';
 $dbconfig['base'] = 'erik';
-$dbconfig['pass'] = 'erik.Goatserver';
+$dbconfig['pass'] = getenv('DB_PASSWORD');
 $dbconfig['char'] = 'utf8';
               
 try {

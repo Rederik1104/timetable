@@ -23,7 +23,7 @@
                 $mail->Host       = 'mail.gmx.net';                     //Set the SMTP server to send through
                 $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
                 $mail->Username   = 'rederik1104@gmx.de';                     //SMTP username
-                $mail->Password   = 'stefanie.mattias';                               //SMTP password
+                $mail->Password   = getenv("DB_PASSWORD");                               //SMTP password
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
                 $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS` 465
             
