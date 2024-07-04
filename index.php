@@ -1,4 +1,13 @@
 <?php
+    require __DIR__ . '/vendor/autoload.php';
+
+    use Dotenv\Dotenv;
+    
+    // Create a new Dotenv instance
+    $dotenv = Dotenv::createUnsafeImmutable(__DIR__);
+    
+    // Load the environment variables
+    $dotenv->load();
     session_start();
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;
@@ -6,7 +15,7 @@
 
     $dsn = "mysql:dbname=erik;host=Content.goatserver.de";
     $username = "erik";
-    $password = getenv('DB_PASSWORD');
+    $password = "erik.Goatserver"; //getenv('DB_PASSWORD');
     $con = new PDO($dsn, $username, $password);
 
     if(isset($_POST["submit"])){

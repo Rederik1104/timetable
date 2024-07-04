@@ -1,4 +1,13 @@
 <?php
+require __DIR__ . '/vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+// Create a new Dotenv instance
+$dotenv = Dotenv::createUnsafeImmutable(__DIR__);
+
+// Load the environment variables
+$dotenv->load();
 $dbconfig['host'] = 'Content.goatserver.de';
 $dbconfig['user'] = 'erik';
 $dbconfig['base'] = 'erik';
