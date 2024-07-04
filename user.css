@@ -1,14 +1,21 @@
-main{
-    margin-top: 80px;
-    margin-left: 15px;
+main {
+  display: flex;
+  flex-direction: column;
+  margin-top: 80px;
+  margin-left: 15px;
+  row-gap: 1rem;
 }
-#emailAdresse{
-    border-width: 1,5px;
-    border-style: solid;
-    background-color: #BBBBBB;
-    
+#emailAdresse {
+  border-width: 1, 5px;
+  border-style: solid;
+  background-color: #bbbbbb;
 }
-button{
-    background: none;
-    border: none;
+button {
+  background: none;
+  border: none;
+}
+#password {
+  border-width: 1, 5px;
+  border-style: solid;
+  background-color: #bbbbbb;
 }

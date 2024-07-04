@@ -53,25 +53,48 @@ session_start();
               window.location.href = 'logout.php';
             }
           </script>
-          <label for="email">E-Mail: </label>
-          <label for="email_picture" id="emailAdresse">
-            <?php
-              
-              $email = $_SESSION["userID"];
-              
-              include "database.php";
+          <div class="email">
+            <label for="email">E-Mail: </label>
+            <label for="email_picture" id="emailAdresse">
+              <?php
+                
+                $email = $_SESSION["userID"];
+                
+                include "database.php";
 
-              $emailSQL = $pdo->query("SELECT email FROM users WHERE id = $email");
-              while($row = $emailSQL->fetch()){
-                echo $row["email"];
-              }
-            ?>
-          </label>
-          <button type="button" class="btnbtn-primary" data-bs-toggle="modal" data-bs-target="#emailChange"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                $emailSQL = $pdo->query("SELECT email FROM users WHERE id = $email");
+                while($row = $emailSQL->fetch()){
+                  echo $row["email"];
+                }
+              ?>
+            </label>
+            <button type="button" class="btnbtn-primary" data-bs-toggle="modal" data-bs-target="#emailChange"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
             </svg>
           </button>
+          </div>
+          <div class="password">
+            <label for="password">Password: </label>
+            <label for="email_picture" id="password">
+              <?php
+                
+                $email = $_SESSION["userID"];
+                
+                include "database.php";
+
+                $emailSQL = $pdo->query("SELECT password FROM users WHERE id = $email");
+                while($row = $emailSQL->fetch()){
+                  echo "hashed: " . $row["password"];
+                }
+              ?>
+            </label>
+            <button type="button" class="btnbtn-primary" data-bs-toggle="modal" data-bs-target="#passwordChange"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+            </svg>
+          </button>
+          </div>
 
           <div class="modal fade" id="emailChange" tabindex="-1" aria-labelledby="#exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -87,6 +110,30 @@ session_start();
                         <input type="text" class="form-control" placeholder="..." aria-label="email1" name="email1">
                         <span class="input-group-text">confirm your Email</span>
                         <input type="text" class="form-control" placeholder="..." aria-label="email2" name="email2">
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                      </div> 
+                    </form>  
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade" id="passwordChange" tabindex="-1" aria-labelledby="#exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Change Your Password</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="password_change.php" method="post">
+                      <div class="input-group mb-3">
+                        <span class="input-group-text">old Password</span>
+                        <input type="text" class="form-control" placeholder="..." aria-label="oPass" name="oPass">
+                        <span class="input-group-text">new Password</span>
+                        <input type="text" class="form-control" placeholder="..." aria-label="nPass" name="nPass">
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
