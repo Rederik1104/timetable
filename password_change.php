@@ -5,15 +5,23 @@ $nPass = $_POST['nPass'];
 $userID = $_SESSION['userID'];
 
 include("database.php");
-$sql = $pdo->query("SELECT password FROM users WHERE id = :id");
+$sql = $pdo->prepare("SELECT password FROM users WHERE id = :id");
 $sql->bindParam(":id", $userID);
-while($row = $sql->fetch()){
-    if(password_verify($oPass, $row['password'])){
-        $stmt = $pdo->query("UPDATE users SET password = :password WHERE id = :id");
-        $stmt->bindParam(":password", $password);
-    }else{
-        echo "password is false!";
+$sql->execute();
+$row = $sql->fetch();
+
+if(password_verify($oPass, $row['password'])){
+    $passHash = password_hash($nPass, PASSWORD_DEFAULT);
+    $stmt = $pdo->prepare("UPDATE users SET password = :password WHERE id = :id");
+    $stmt->bindParam(":password", $passHash);
+    $stmt->bindParam(":id", $userID);
+
+    if($stmt->execute()){
         header("Location: user.php");
-        exit();
     }
+    
+}else{
+    echo "password is false!";
+    header("Location: user.php");
+    exit();
 }

@@ -4,6 +4,7 @@ main {
   margin-top: 80px;
   margin-left: 15px;
   row-gap: 1rem;
+  font-family: Arial, sans-serif;
 }
 #emailAdresse {
   border-width: 1, 5px;
@@ -18,4 +19,22 @@ button {
   border-width: 1, 5px;
   border-style: solid;
   background-color: #bbbbbb;
+}
+input[type="number"] {
+  padding: 10px;
+  font-size: 1em;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  width: 60px;
+  transition: border-color 0.3s;
+}
+
+input[type="number"]:focus {
+  border-color: #66afe9;
+  outline: none;
+}
+
+.schoolHour label {
+  margin-right: 10px;
+  color: #333;
 }
