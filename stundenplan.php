@@ -93,16 +93,22 @@ session_start();
         }
 
         // Define fixed lesson times
-        $lesson_times = [
-            1 => "08:00 - 08:45",
-            2 => "08:50 - 09:35",
-            3 => "09:50 - 10:35",
-            4 => "10:40 - 11:25",
-            5 => "11:30 - 12:15",
-            6 => "12:20 - 13:05",
-            7 => "13:10 - 13:55",
-            8 => "14:00 - 14:45"
-        ];
+        // The start time of the first lesson, can be changed by the user
+        $start_time = "08:00";
+        // The duration of each lesson, can be changed by the user
+        $sqlDuration = $pdo->prepare("SELECT * FROM hourLength WHERE createdBy = :id");
+        $sqlDuration->bindParam(":id", $_SESSION['userID']);
+        $sqlDuration->execute();
+        $duration = $sqlDuration->fetch(PDO::FETCH_ASSOC);
+        $lesson_duration = $duration['length']; // in minutes
+        // Generate the lesson times based on the start time and duration
+        $lesson_times = [];
+        for ($i = 0; $i < 8; $i++) {
+            $time = new DateTime($start_time);
+            $time->add(new DateInterval("PT{$lesson_duration}M"));
+            $lesson_times[$i+1] = $start_time . " - " . $time->format("H:i");
+            $start_time = $time->format("H:i");
+        }
 
         // Output the table rows
         for ($lesson = 1; $lesson <= count($lesson_times); $lesson++) {
