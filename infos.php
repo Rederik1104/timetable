@@ -32,7 +32,7 @@ session_start();
               <a class="nav-link active" aria-current="page" href="infos.php">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="stundenplan.html">Timetable</a>
+              <a class="nav-link" href="stundenplan.php">Timetable</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="user.php">User</a>
