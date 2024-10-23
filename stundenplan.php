@@ -129,10 +129,10 @@ session_start();
                   $duration = $schedule[$day][$lesson]['duration'];
                   $color = $schedule[$day][$lesson]['color'];
                   $rowspan = max(1, $duration);
-                  echo "<td style='background-color: $color' rowspan='{$rowspan}'>{$subject_name}</td>";
+                  echo "<td style='background-color: $color' id='day-{$day}-lesson-{$lesson}' rowspan='{$rowspan}' class='td'>{$subject_name}</td>";
               } else {
                   // Display empty cell if no lesson is found
-                  echo "<td></td>";
+                  echo "<td id='day-{$day}-lesson-{$lesson}' class='td'></td>";
               }
           }
           echo "</tr>";
@@ -141,6 +141,87 @@ session_start();
         ?>
         </tbody>
     </table>
+
+        <div class="button-container">
+            <button class="btn-create-timetable" id="createTimetable" onclick="createTimetable()">Create Timetable</button>
+        </div>
+    <?php
+
+        
+        include("database.php");
+        $sql = $pdo->prepare("SELECT * FROM schedules WHERE userID = :userID");
+        $sql->bindParam(":userID", $_SESSION['userID']);
+        $sql->execute();
+
+        if ($sql->rowCount() == 0) {
+            ?>
+            <script>
+                window.onload = function() {
+                    var button = document.getElementById("createTimetable");
+                    button.innerHTML = "Create Timetable";
+                    button.setAttribute("onclick", "createTimetable()");
+                };
+            </script>
+            <?php
+        } else {
+            ?>
+            <script>
+                window.onload = function() {
+                    var button = document.getElementById("createTimetable");
+                    button.innerHTML = "Change Timetable";
+                    button.setAttribute("onclick", "changeTimetable()");
+                };
+            </script>
+            <?php
+        }
+    ?>
+
+    <div class="draggable-items">
+    <?php
+    include "database.php";
+
+    $sqlSubject = $pdo->query("SELECT * FROM subject ORDER BY subject_name");
+
+    while ($row = $sqlSubject->fetch()) {
+    ?>
+
+    <div class="subject-cards" style="display:flex; flex-direction: row">
+    <div class="card_add" id="<?php echo $row['ID']; ?>" draggable="true">
+        <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title"><?php echo $row["subject_name"]; ?></h5>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><?php echo $row["color"]; ?></li>
+        </ul>
+        <?php
+        if ($row['editable'] == 0) {
+            ?>
+            <div class="card-body">
+            <button type="submit" class="btn-close" aria-label="Close"></button>
+            </div>
+            <?php
+        } else {
+            ?>
+            <form action="subject_delete.php?roomID=<?php echo $row["ID"]; ?>" method="POST">
+            <div class="card-body">
+                <button type="submit" class="btn-close" aria-label="Close"></button>
+            </div>
+            </form>
+            <?php
+        }
+        ?>
+        </div>
+    </div>
+    </div>
+
+<?php
+}
+?>
+
+
+
+    <script src="stundenplan.js"></script>
     
 </main>
 

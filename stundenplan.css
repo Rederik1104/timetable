@@ -1,6 +1,52 @@
-.table{
-    margin-top: 5%;
+.table {
+  margin-top: 5%;
 }
-.table tr :hover{
-    background-color: #EEEEEE;
+.table tr :hover {
+  background-color: #eeeeee;
+}
+
+.button-container {
+  text-align: center;
+}
+
+.btn-create-timetable {
+  background: linear-gradient(to right, #5bc6ff, #3f91f0);
+  border: none;
+  border-radius: 25px;
+  padding: 15px 30px;
+  font-size: 18px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-create-timetable:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-create-timetable:active {
+  transform: scale(0.98);
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.draggable-items {
+  display: flex;
+  flex-wrap: wrap;
+}
+.card {
+  margin-top: 40px;
+  margin-left: 20px;
+}
+.card_add {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.search-bar-container {
+  display: flex;
+  align-items: center;
+  margin-left: 50px;
 }
