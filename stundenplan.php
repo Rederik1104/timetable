@@ -19,7 +19,6 @@ session_start();
 
 </head>
 <body>
-<main>
     <nav class="navbar bg-body-tertiary fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Your Timetable</a>
@@ -59,12 +58,13 @@ session_start();
             </div>
         </div>
     </nav>
+<main>
     <script>
         function logout() {
             window.location.href = "logout.php";
         }
     </script>
-    <table class="table">
+    <table class="table" style="position:relative; margin-top: 75px;">
         <thead>
         <tr>
             <th scope="col">#</th>
@@ -96,47 +96,73 @@ session_start();
 
         // Define fixed lesson times
         // The start time of the first lesson, can be changed by the user
+        
         $start_time = "08:00";
-        // The duration of each lesson, can be changed by the user
+
+        // Fetch lesson duration from the database
         $sqlDuration = $pdo->prepare("SELECT * FROM hourLength WHERE createdBy = :id");
         $sqlDuration->bindParam(":id", $_SESSION['userID']);
         $sqlDuration->execute();
         $duration = $sqlDuration->fetch(PDO::FETCH_ASSOC);
-        $lesson_duration = $duration['length']; // in minutes
-        // Generate the lesson times based on the start time and duration
+        $lesson_duration = $duration['length']; // lesson duration in minutes
+
+        // Generate lesson times with breaks
         $lesson_times = [];
-        for ($i = 0; $i < 8; $i++) {
+        for ($i = 0; $i < 9; $i++) {
+            // Set lesson start and end times
             $time = new DateTime($start_time);
             $time->add(new DateInterval("PT{$lesson_duration}M"));
             $lesson_times[$i+1] = $start_time . " - " . $time->format("H:i");
+            
+            // Update start time for next lesson by adding the lesson duration + 5 minutes
+            $time->add(new DateInterval("PT5M")); // 5-minute break after each lesson
             $start_time = $time->format("H:i");
+
+            // Add a 15-minute break after the 2nd lesson
+            if ($i == 1) {
+                $break_start = new DateTime($start_time);
+                $break_start->add(new DateInterval("PT15M"));
+                $lesson_times['break_15'] = $start_time . " - " . $break_start->format("H:i");
+                $start_time = $break_start->format("H:i");
+            }
+            
+            // Add a 10-minute break after the 4th lesson
+            if ($i == 3) {
+                $break_start = new DateTime($start_time);
+                $break_start->add(new DateInterval("PT10M"));
+                $lesson_times['break_10'] = $start_time . " - " . $break_start->format("H:i");
+                $start_time = $break_start->format("H:i");
+            }
         }
 
-        // Output the table rows
-        for ($lesson = 1; $lesson <= count($lesson_times); $lesson++) {
-          echo "<tr>";
-          
-          // Display the time range for the current lesson
-          echo "<th scope='row'>{$lesson_times[$lesson]}</th>";
-          
-          // Array of days
-          $days = ['1', '2', '3', '4', '5'];
-          
-          foreach ($days as $day) {
-              // Check if the day and lesson exist in the schedule array
-              if (isset($schedule[$day][$lesson])) {
-                  $subject_name = $schedule[$day][$lesson]['subject_name'];
-                  $duration = $schedule[$day][$lesson]['duration'];
-                  $color = $schedule[$day][$lesson]['color'];
-                  $rowspan = max(1, $duration);
-                  echo "<td style='background-color: $color' id='day-{$day}-lesson-{$lesson}' rowspan='{$rowspan}' class='td'>{$subject_name}</td>";
-              } else {
-                  // Display empty cell if no lesson is found
-                  echo "<td id='day-{$day}-lesson-{$lesson}' class='td'></td>";
-              }
-          }
-          echo "</tr>";
+        // Display the table rows with lessons and breaks
+        foreach ($lesson_times as $key => $time_range) {
+            echo "<tr>";
+
+            // Check if the row is a break
+            if ($key === 'break_15') {
+                echo "<th scope='row'>Break (15 min)</th>";
+            } elseif ($key === 'break_10') {
+                echo "<th scope='row'>Break (10 min)</th>";
+            } else {
+                echo "<th scope='row'>{$time_range}</th>";
+            }
+
+            // Array of days for each lesson or break
+            $days = ['1', '2', '3', '4', '5'];
+            
+            foreach ($days as $day) {
+                if (is_numeric($key) && isset($schedule[$day][$key])) {
+                    $subject_name = $schedule[$day][$key]['subject_name'];
+                    $color = $schedule[$day][$key]['color'];
+                    echo "<td style='background-color: $color' id='day-{$day}-lesson-{$key}' class='td' data-label='{$days[$day - 1]}'>{$subject_name}</td>";
+                } else {
+                    echo "<td class='td' data-label='{$days[$day - 1]}' id='day-{$day}-lesson-{$key}'></td>";
+                }
+            }
+            echo "</tr>";
         }
+
 
         ?>
         </tbody>
@@ -145,79 +171,52 @@ session_start();
         <div class="button-container">
             <button class="btn-create-timetable" id="createTimetable" onclick="createTimetable()">Create Timetable</button>
         </div>
-    <?php
-
-        
-        include("database.php");
-        $sql = $pdo->prepare("SELECT * FROM schedules WHERE userID = :userID");
-        $sql->bindParam(":userID", $_SESSION['userID']);
-        $sql->execute();
-
-        if ($sql->rowCount() == 0) {
-            ?>
-            <script>
-                window.onload = function() {
-                    var button = document.getElementById("createTimetable");
-                    button.innerHTML = "Create Timetable";
-                    button.setAttribute("onclick", "createTimetable()");
-                };
-            </script>
-            <?php
-        } else {
-            ?>
-            <script>
-                window.onload = function() {
-                    var button = document.getElementById("createTimetable");
-                    button.innerHTML = "Change Timetable";
-                    button.setAttribute("onclick", "changeTimetable()");
-                };
-            </script>
-            <?php
-        }
-    ?>
 
     <div class="draggable-items">
     <?php
     include "database.php";
 
     $sqlSubject = $pdo->query("SELECT * FROM subject ORDER BY subject_name");
+    ?>
+    <div class="subject-cards" style="display:flex; flex-direction: row">
+    <?php
 
     while ($row = $sqlSubject->fetch()) {
     ?>
-
-    <div class="subject-cards" style="display:flex; flex-direction: row">
-    <div class="card_add" id="<?php echo $row['ID']; ?>" draggable="true">
-        <div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title"><?php echo $row["subject_name"]; ?></h5>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item"><?php echo $row["color"]; ?></li>
-        </ul>
+        <div class="card_add" id="<?php echo $row['ID']; ?>" draggable="true">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title"><?php echo $row["subject_name"]; ?></h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><?php echo $row["color"]; ?></li>
+                </ul>
         <?php
         if ($row['editable'] == 0) {
             ?>
-            <div class="card-body">
-            <button type="submit" class="btn-close" aria-label="Close"></button>
-            </div>
+                <div class="card-body">
+                    <button type="submit" class="btn-close" aria-label="Close"></button>
+                </div>
             <?php
         } else {
             ?>
-            <form action="subject_delete.php?roomID=<?php echo $row["ID"]; ?>" method="POST">
-            <div class="card-body">
-                <button type="submit" class="btn-close" aria-label="Close"></button>
-            </div>
-            </form>
+                <form action="subject_delete.php?roomID=<?php echo $row["ID"]; ?>" method="POST">
+                    <div class="card-body">
+                        <button type="submit" class="btn-close" aria-label="Close"></button>
+                    </div>
+                </form>
             <?php
         }
         ?>
+            </div>
         </div>
+    <?php
+    }
+    ?>
     </div>
     </div>
 
-<?php
-}
-?>
+
 
 
 

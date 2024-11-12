@@ -1,7 +1,7 @@
 const buttons = document.querySelector(".button-container");
 const table = document.querySelector(".table");
 const tds = document.querySelectorAll(".td"); // all td-elements selected
-const draggables = document.querySelectorAll(".draggable"); // all draggable-elements selected
+const draggables = document.querySelectorAll(".card_add"); // all draggable-elements selected
 const draggableDiv = document.querySelector(".draggable-items");
 
 // function to create the timetable
@@ -22,6 +22,9 @@ function createTimetable() {
 
   draggables.forEach((item) => {
     item.addEventListener("dragstart", handleDragStart);
+    item.addEventListener("touchstart", handleTouchStart); // Add touch support
+    item.addEventListener("touchmove", handleTouchMove); // Add touch support
+    item.addEventListener("touchend", handleTouchEnd); // Add touch support
   });
 
   draggableDiv.style.display = "flex";
@@ -45,6 +48,9 @@ function cancelTimetable() {
 
   draggables.forEach((item) => {
     item.removeEventListener("dragstart", handleDragStart);
+    item.removeEventListener("touchstart", handleTouchStart);
+    item.removeEventListener("touchmove", handleTouchMove);
+    item.removeEventListener("touchend", handleTouchEnd);
   });
   draggableDiv.style.display = "none";
 }
@@ -52,33 +58,89 @@ function cancelTimetable() {
 // Event-Handler for Drag-Start
 function handleDragStart(event) {
   event.dataTransfer.setData("text", event.target.id);
+  console.log(event.target.id);
 }
 
-// Event-Handler für Drag-Übertragung
-function handleDragOver(event) {
-  event.preventDefault(); // Ermöglicht das Ablegen
-  event.target.classList.add("dragover"); // Optional: Visuelles Feedback
+// Event-Handler for Touch Start (to simulate drag start)
+function handleTouchStart(event) {
+  const touch = event.touches[0];
+  event.dataTransfer = {
+    setData: function () {},
+    getData: function () {
+      return event.target.id;
+    },
+  };
+  handleDragStart(event); // Reuse drag start logic
 }
 
-// Event-Handler für Drop
+// Event-Handler for Touch Move
+function handleTouchMove(event) {
+  event.preventDefault(); // Prevent scrolling
+  const touchLocation = event.targetTouches[0];
+
+  // Move the card to follow the touch
+  event.target.style.position = "absolute";
+  event.target.style.left = `${touchLocation.pageX}px`;
+  event.target.style.top = `${touchLocation.pageY}px`;
+}
+
+// Event-Handler for Drop
 function handleDrop(event) {
   event.preventDefault();
-  event.target.classList.remove("dragover"); // Entferne visuelles Feedback
+  event.target.classList.remove("dragover");
   const data = event.dataTransfer.getData("text");
   const draggedElement = document.getElementById(data);
 
   if (draggedElement) {
-    // Füge das gezogene Element in das <td> ein
+    // Append the dragged element to the target cell
     event.target.appendChild(draggedElement);
+    onItemDropped(event, draggedElement.querySelector(".card-title").innerText);
   }
 }
 
-// Event-Handler für Drag verlassen
+// Event-Handler for Touch End (to simulate drop)
+function handleTouchEnd(event) {
+  const touch = event.changedTouches[0];
+  const dropTarget = document.elementFromPoint(touch.clientX, touch.clientY);
+
+  if (dropTarget && dropTarget.classList.contains("td")) {
+    const cardId = event.target.id;
+    const draggedCard = document.getElementById(cardId);
+
+    if (draggedCard) {
+      dropTarget.appendChild(draggedCard);
+      onItemDropped(
+        { target: dropTarget },
+        draggedCard.querySelector(".card-title").innerText
+      );
+    }
+  }
+  // Reset card position after touch ends
+  event.target.style.position = "";
+  event.target.style.left = "";
+  event.target.style.top = "";
+}
+
+// Function to call on item drop with additional logic
+function onItemDropped(Dragevent, subject) {
+  let day = Dragevent.target.id.split("-");
+  window.location.href = `addLesson.php?day=${day[1]}&lesson=${
+    day[3]
+  }&subject_name=${encodeURIComponent(subject)}`;
+}
+
+// Event-Handler for Drag Leave
 function handleDragLeave(event) {
   event.target.classList.remove("dragover");
 }
 
-// Funktion zum Überprüfen des Modus beim Laden der Seite
+// Event-Handler for Drag Over
+function handleDragOver(event) {
+  event.preventDefault();
+  event.target.classList.add("dragover");
+}
+
+// Check mode on page load
 function checkCreateMode() {
   if (localStorage.getItem("createMode") === "true") {
     createTimetable();
@@ -87,7 +149,6 @@ function checkCreateMode() {
   }
 }
 
-// Beim Laden der Seite den Modus überprüfen
 document.addEventListener("DOMContentLoaded", function () {
   checkCreateMode();
 });
