@@ -15,7 +15,7 @@
 
     $dsn = "mysql:dbname=erik;host=Content.goatserver.de";
     $username = "erik";
-    $password = "erik.Goatserver"; //getenv('DB_PASSWORD');
+    $password = getenv('DB_PASSWORD'); //getenv('DB_PASSWORD');
     $con = new PDO($dsn, $username, $password);
 
     if(isset($_POST["submit"])){
