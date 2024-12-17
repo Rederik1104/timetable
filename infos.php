@@ -362,7 +362,7 @@ session_start();
                     <form action="room_add.php" method="post">
                       <div class="input-group mb-3">
                         <span class="input-group-text">Building (char)</span>
-                        <input type="text" class="form-control" placeholder="..." aria-label="builing" name="building">
+                        <input type="text" class="form-control" placeholder="..." aria-label="building" name="building">
                         <span class="input-group-text">number</span>
                         <input type="text" class="form-control" placeholder="..." aria-label="number" name="number">
                       </div>
@@ -400,7 +400,7 @@ session_start();
 
         include "database.php";
         
-        $sqlSubject = $pdo->query("SELECT * FROM subject ORDER BY subject_name");
+        $sqlSubject = $pdo->query("SELECT * FROM subject WHERE createdBy = $_SESSION[userID] OR createdBy = 0 ORDER BY subject_name");
         While($row = $sqlSubject->fetch()){
 
     ?>
@@ -423,7 +423,7 @@ session_start();
             <?php
             }else{
               ?>
-              <form action="subject_delete.php?roomID=<?php echo $row["ID"] ?>" method="POST">
+              <form action="subject_delete.php?subjectID=<?php echo $row["ID"] ?>" method="POST">
                 <div class="card-body">
                   <button type="submit" class="btn-close" aria-label="Close"></button>
                 </div>
@@ -458,9 +458,9 @@ session_start();
                     <form action="subject_add.php" method="post">
                       <div class="input-group mb-3">
                         <span class="input-group-text">subject name</span>
-                        <input type="text" class="form-control" placeholder="..." aria-label="builing" name="building">
+                        <input type="text" class="form-control" placeholder="..." aria-label="name" name="name">
                         <span class="input-group-text">color</span>
-                        <input type="text" class="form-control" placeholder="..." aria-label="number" name="number">
+                        <input type="text" class="form-control" placeholder="..." aria-label="color" name="color">
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
