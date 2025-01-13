@@ -6,8 +6,6 @@ services:
     container_name: php-web
     volumes:
       - .:/var/www/html
-      - ./vendor/phpmailer/phpmailer:/var/www/html/vendor/phpmailer/phpmailer
-      - ./php-8.3.8:/var/www/html/php
     ports:
       - "8080:80"
     depends_on:
@@ -24,8 +22,18 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
       - "3306:3306"
+    #volumes:
+    #- db-data:/var/lib/mysql
+
+  node:
+    image: node:16
+    container_name: node-service
     volumes:
-      - db-data:/var/lib/mysql
+      - .:/usr/src/app
+    working_dir: /usr/src/app
+    command: npm start
+    ports:
+      - "3000:3000"
 
 volumes:
   db-data:

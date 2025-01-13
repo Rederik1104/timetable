@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!isset($_SESSION["userID"])) {
+  header("Location: index.php");
+  exit(); // Wichtiger Exit-Aufruf, um sicherzustellen, dass der Rest des Codes nicht ausgeführt wird
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

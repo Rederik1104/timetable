@@ -171,6 +171,21 @@
             text-align:center;
             align-items:center;
         ">Login with Google</a> 
+        <a href="login_untis.php" style="
+            color:white;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 19px;
+            background-image: linear-gradient(to right, rgb(162,0,255), rgb(74,15,236));
+            background-size: 100% 4px;
+            background-position: bottom;
+            background-repeat: no-repeat;
+            line-height: 30px;
+            text-decoration: none;
+            text-align:center;
+            align-items:center;
+            cursor: pointer;
+        ">Login with Untis</a> 
+
     </form>
     
 </body>

@@ -1,5 +1,26 @@
 <?php
 session_start();
+include "database.php";
+
+// Überprüfen, ob userID in der Session existiert
+if (!isset($_SESSION["userID"])) {
+    header("Location: index.php");
+    exit(); // Wichtiger Exit-Aufruf, um sicherzustellen, dass der Rest des Codes nicht ausgeführt wird
+}
+
+// Abfrage vorbereiten und ausführen
+$sql = $pdo->prepare("SELECT * FROM hourLength WHERE createdBy = :id");
+$sql->bindParam(":id", $_SESSION["userID"], PDO::PARAM_INT);
+$sql->execute();
+$hour = $sql->fetch(PDO::FETCH_ASSOC);
+
+// Wenn kein Eintrag existiert, einen neuen erstellen
+if ($hour === false) {
+    $sql = $pdo->prepare("INSERT INTO hourLength(createdBy, Length) VALUES(:id, 45)");
+    $sql->bindParam(":id", $_SESSION["userID"], PDO::PARAM_INT);
+    $sql->execute();
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
